@@ -1,15 +1,9 @@
+from uuid import UUID
 from app.resources.model import Resource, db
 from flask import Blueprint, jsonify, make_response, request
 from sqlalchemy.orm import load_only
 
 resource = Blueprint('resource', __name__)
-
-# def row2dict(row):
-#     d = {}
-#     for column in row.__table__.columns:
-#         d[column.name] = str(getattr(row, column.name))
-
-#     return d
 
 def updateNumMatch(resource, req_data):
   serialized_resource = resource.serialize_cover
@@ -46,7 +40,13 @@ def sorted_resources():
 
 @resource.route('/resource/<string:resource_id>', methods=['GET'])
 def resource_detail(resource_id):
-  return_val = jsonify(resource_details=resource_id)
-  return  make_response(
-        return_val,
-        200)
+  # return_val = jsonify(resource_details=resource_id)
+  resource_detail = Resource.query.options(load_only(
+    Resource.id,
+    Resource.description,
+    Resource.content,
+    Resource.external_links
+  )).get(UUID(resource_id))
+  serialized_detail = resource_detail.serialize_detail
+  print(serialized_detail)
+  return  jsonify(serialized_detail), 200

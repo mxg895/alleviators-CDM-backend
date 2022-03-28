@@ -36,7 +36,7 @@ def create_app():
     db.init_app(app)
     with app.app_context():
         db.create_all()
-        if len(args := sys.argv) > 2:
+        if len(args := sys.argv) > 2 and app.config.get("ENV") == "development":
             # transform_resources(args[1], args[2])
             # TODO: figure out why are resources being added twice
             try:
@@ -60,21 +60,12 @@ def create_app():
             except Exception as e:
                 print('Error transferring data from data.csv to PostgreSQL db')
                 print(e)
-        # @app.route('/')
-        # def hello():
-        #     return 'Hello World!'
-        @app.route('/api/user', methods=['GET'])
-        def list_user():
-            return 'Users!'
+        @app.route('/')
+        def hello():
+            return 'Hello World!'
         from app.resources import routes
         app.register_blueprint(routes.resource)
 
     return app
 
-# @app.route('/')
-# def hello():
-#     return 'Hello World!'
 
-# if __name__ == '__main__':
-#     print('name is main')
-#     app.run()

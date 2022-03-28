@@ -4,7 +4,7 @@ from datetime import datetime
 from enum import Enum
 
 from app.extensions import db
-from sqlalchemy.dialects.postgresql import ARRAY, ENUM, JSONB, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, ENUM, UUID
 
 
 class Aspect(str, Enum):
@@ -89,7 +89,6 @@ class Resource(db.Model):
 
     @property
     def serialize_cover(self):
-        print("serializing....")
         return {
             'id': str(self.id),
             'title': self.title,
@@ -105,4 +104,13 @@ class Resource(db.Model):
             # 'external-links': self.external_links,
             # 'created': self.created.__str__(),
             # 'last-updated': self.last_updated.__str__()
+        }
+
+    @property
+    def serialize_detail(self):
+        return {
+            'id': str(self.id),
+            'description': self.description,
+            'content': self.content,
+            'externalLinks': self.external_links
         }
