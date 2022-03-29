@@ -92,18 +92,10 @@ class Resource(db.Model):
         return {
             'id': str(self.id),
             'title': self.title,
-            # 'description': self.description,
-            # 'content': self.content,
-            # 'aspect':map(lambda enum: enum.name, self.aspect),
-            # 'goal':map(lambda enum: enum.name, self.goal),
-            # 'subcategory': map(lambda enum: enum.name, self.sub_category),
             'aspect': [str(a) for a in self.aspect],
             'goal': [str(g) for g in self.goal],
             'subcategory': [str(s) for s in self.sub_category],
             'imageName': self.image_name,
-            # 'external-links': self.external_links,
-            # 'created': self.created.__str__(),
-            # 'last-updated': self.last_updated.__str__()
         }
 
     @property

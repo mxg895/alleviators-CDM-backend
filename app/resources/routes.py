@@ -46,7 +46,7 @@ def resource_detail(resource_id):
     Resource.description,
     Resource.content,
     Resource.external_links
-  )).get(UUID(resource_id))
+  )).get(resource_id)
   serialized_detail = resource_detail.serialize_detail
-  print(serialized_detail)
-  return  jsonify(serialized_detail), 200
+  # print(serialized_detail)
+  return jsonify(serialized_detail), 200

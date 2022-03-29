@@ -14,16 +14,16 @@ from app.resources.model import *
 
 
 def create_app():
-    print('running flask')
+    # print('running flask')
     app = Flask(__name__, instance_relative_config=False)
 
     if not 'WEBSITE_HOSTNAME' in os.environ:
         # local development, where we'll use environment variables
-        print('Loading config.development and environment variables from .env file.')
+        # print('Loading config.development and environment variables from .env file.')
         app.config.from_pyfile('configs/dev.py')
     else:
         # production
-        print('Loading config.production.')
+        # print('Loading config.production.')
         app.config.from_pyfile('configs/prod.py')
 
     app.config.update(
@@ -31,7 +31,7 @@ def create_app():
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
     )
     app.config['CORS_HEADERS'] = 'Content-Type'
-    print(app.config.get('SQLALCHEMY_DATABASE_URI'))
+    # print(app.config.get('SQLALCHEMY_DATABASE_URI'))
     cors.init_app(app, origins=["http://localhost:3000/*"], headers='Content-Type')
     db.init_app(app)
     with app.app_context():
@@ -55,7 +55,7 @@ def create_app():
                             external_links = row['external_links'])
                         db.session.add(resource)
                     db.session.commit()
-                    print('commited to db')
+                    # print('commited to db')
                     f.close()
             except Exception as e:
                 print('Error transferring data from data.csv to PostgreSQL db')
