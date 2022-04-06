@@ -48,5 +48,4 @@ def resource_detail(resource_id):
     Resource.external_links
   )).get(resource_id)
   serialized_detail = resource_detail.serialize_detail
-  # print(serialized_detail)
   return jsonify(serialized_detail), 200

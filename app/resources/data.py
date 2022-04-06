@@ -21,14 +21,12 @@ def transform_resources(raw_csv_path, md_fldr_path):
             writer = csv.DictWriter(f=fa, dialect='excel', fieldnames=field_names, delimiter=',')
             writer.writeheader()
             for row in reader:
-                # print(row)
                 content = None
                 md_path = row['File Path']
                 if not (md_path is None or md_path == ""):
                     with open(md_fldr_path + '/' + md_path, 'r', encoding='utf-8-sig') as fmdr:
                         content = fmdr.read()
                         fmdr.close()
-                # print(row.keys())
                 writer.writerow({
                     'id': uuid.uuid4(),
                     'title': row["Name"],
